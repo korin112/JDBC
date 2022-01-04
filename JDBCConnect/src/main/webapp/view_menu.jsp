@@ -12,7 +12,7 @@ ResultSet rs=null;
 String url="jdbc:oracle:thin:@localhost:1521:orcl";	/* 다른사람 db접속하려면 @뒤에 IP주소 넣으면 됨 */
 String userid="ora_user";
 String passcode="human123";
-String sql="select * from student";
+String sql="select name,price from menu";
 
 %>
 <!DOCTYPE html>
@@ -40,11 +40,9 @@ String sql="select * from student";
 </style>
 <table>
 <tr>
-	<th>이름</th>
-	<th>수학</th>
-	<th>국어</th>
-	
-</tr><!-- <th>매니저사번</th><th>부서아이디</th><th>직위아이디</th> -->
+	<th>메뉴명</th>
+	<th>가격</th>
+</tr>
 <%
 try{
 	Class.forName("oracle.jdbc.driver.OracleDriver");	//driver(ojdbc6.jar)
@@ -53,13 +51,11 @@ try{
 	rs=stmt.executeQuery(sql);	// SQL문 실행 결과를 rs에 담아라
 	while(rs.next()){		
 		String name=rs.getString("name");
-		int math=rs.getInt("math");
-		int korean=rs.getInt("korean");
+		int price=rs.getInt("price");
 %>
 		<tr>
 			<td><%=name %></td>
-			<td><%=math%></td>
-			<td><%=korean %></td>
+			<td><%=price%></td>
 		</tr>
 <%	}
 } catch(Exception e){

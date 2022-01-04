@@ -13,7 +13,8 @@ String userid="ora_user";
 String passcode="human123";
 // String sql="insert into student values('steve rogers',98,88)";
 // insert.jsp?name=asdf&math=100&korean=10 -> request.getParameter로 ㄱㄱ
-String sql="insert into student values(?,?,?)";
+String sql="delete from menu where name=?";
+
 %>
 <!DOCTYPE html>
 <html>
@@ -24,27 +25,21 @@ String sql="insert into student values(?,?,?)";
 <body>
 <%
 try{
-	if(request.getParameter("name")==null || 
-	   request.getParameter("math")==null ||
-	   request.getParameter("korean")==null){
+	if(request.getParameter("name")==null){
 		out.println("적절한 값이 주어지지 않았습니다.");
 		return;
 	}
 	Class.forName("oracle.jdbc.driver.OracleDriver");	//driver(ojdbc6.jar)
 	conn=DriverManager.getConnection(url,userid,passcode); // db접속 실패하면 null뜸
 	pstmt=conn.prepareStatement(sql);
-	// insert.jsp?name=asdf&math=100&korean=10 -> request.getParameter로 ㄱㄱ
 	pstmt.setString(1,request.getParameter("name"));
-	pstmt.setInt(2,Integer.parseInt(request.getParameter("math")));
-	pstmt.setInt(3,Integer.parseInt(request.getParameter("korean")));
-	//insert into student values('Jefferson',100,20) 으로 변환되서 들어감
 	pstmt.executeUpdate();
 } catch(Exception e){
 	e.printStackTrace();
 } finally{
 	if(pstmt!=null) pstmt.close();
 	if(conn!=null) conn.close();
-	request.getRequestDispatcher("view_student.jsp").forward(request,response);
+	response.sendRedirect("controlmenu.jsp");
 }
 %>
 </body>
