@@ -6,17 +6,33 @@
 <meta charset="UTF-8">
 <title>객실관리</title>
 </head>
+<h1 style="color:white; text-align:center;" >객실관리</h1>
+<hr><br>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap"
+	rel="stylesheet">
 <style>
 table {
 	border-collapse: collapse;
+	align:center;
+}
+body{
+	background-image:url(https://wallpapercave.com/wp/wp3516813.jpg);
+}
+th,tr,td {
+	border: 2px solid white;
+	color:white;
+	font-size:20px;
+}
+*{
+	font-family: 'Gowun Batang', serif;
 }
 
-th, td {
-	border: 1px solid blue;
-}
 </style>
 <body>
-<table>
+<table align=right width=30%>
 		<!-- 입력부분 -->
 		<tr>
 			<td>객실번호:<input type=number id=code></td>
@@ -34,10 +50,10 @@ th, td {
 			<td>숙박비:<input type=number id=howmuch></td>
 		</tr>
 		<tr>
-			<td align=center><input type=button value='전송' id=btnGo></td>
+			<td align=left><input type=button value='전송' id=btnGo style="display:block; width:100%; text-align:center; font-size:1em; padding:2px; background:black; color:white;" ></td>
 		</tr>
-	</table><br>
-	<table id=tblRoom>
+	</table>
+	<table id=tblRoom align=left width=60%>
 		<!-- 객실목록 -->
 		<thead>
 			<tr>

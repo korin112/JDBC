@@ -34,7 +34,6 @@ public class delete extends HttpServlet {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 
-
 		String url="jdbc:oracle:thin:@localhost:1521:orcl";	/* 다른사람 db접속하려면 @뒤에 IP주소 넣으면 됨 */
 		String userid="ora_user";
 		String passcode="human123";
