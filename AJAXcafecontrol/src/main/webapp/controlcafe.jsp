@@ -130,34 +130,34 @@ $(document)
    loadMenu();
    return false;
 })
-// .on('click','#selMenu',function(){
-//     str=$('#selMenu option:selected').text();
-//     ar=str.split(' ');
-//     $('#menuname').val(ar[0]);
-//     $('#price').val(ar[1]+'원');
-//     $('#count').val(1)+'원';
-// })
-// .on('change','#count',function(){
-//     str=$('#count').val();
-//     $('#price').val(ar[1]*str+'원');
-// })
-// //$('btnReset').trigger('click'); -> 한 줄로 밑에 코드를 실행 가능
-// .on('click','#btnReset',function(){
-//     $('#menuname,#count,#price').val('');
-// })
-// .on('click','#btnAdd',function(){
-//     str='<option>'+$('#menuname').val()+'     '+$('#count').val()+'개'+'     '+ $('#price').val()+'</option>';
-//     $('#selOrder').append(str);
-//     a=$('#price').val()
-//     a=parseInt(a)
-//     ar1+=a
-//     $('#total').val(ar1+'원')
-// })
-// .on('click','#btnCancel',function(){
-//     $('#total,#mobile').val('');
-//     $('#selOrder').text('');
-//     ar1=0;
-// })
+.on('click','#selMenu',function(){
+    str=$('#selMenu option:selected').text();
+    ar=str.split(' ');
+    $('#menuname').val(ar[0]);
+    $('#price').val(ar[1]+'원');
+    $('#count').val(1)+'원';
+})
+.on('change','#count',function(){
+    str=$('#count').val();
+    $('#price').val(ar[1]*str+'원');
+})
+//$('btnReset').trigger('click'); -> 한 줄로 밑에 코드를 실행 가능
+.on('click','#btnReset',function(){
+    $('#menuname,#count,#price').val('');
+})
+.on('click','#btnAdd',function(){
+    str='<option>'+$('#menuname').val()+'     '+$('#count').val()+'개'+'     '+ $('#price').val()+'</option>';
+    $('#selOrder').append(str); 
+    a=$('#price').val()
+    a=parseInt(a)
+    ar1+=a
+    $('#total').val(ar1+'원')
+})
+.on('click','#btnCancel',function(){
+    $('#total,#mobile').val('');
+    $('#selOrder').text('');
+    ar1=0;
+})
 // .on('click','#btnDone',function(){
 //     str1='<option>'+'고객번호 : '+$('#mobile').val()+'     '+'구매금액 : '+$('#total').val()+'</option>';  
 //     $('#selSales').append(str1);
@@ -230,12 +230,11 @@ $(document)
 
 function loadMenu(){
 	$('#selMenu').empty();
-	
 	$.get('selectMenu',{},function(txt){
 				let rec=txt.split(';');
 				for(i=0; i<rec.length; i++){
 			let field=rec[i].split(',');
-			let html='<option value='+field[0]+'>'+field[0]+'&nbsp'+field[1]+'</option>';
+			let html='<option value='+field[0]+'>'+field[0]+' '+field[1]+'</option>';
 			$('#selMenu').append(html);
 			
 		}
