@@ -39,6 +39,10 @@ td.bound {
         </tr>
         
         <tr>
+            <td>메뉴코드</td>
+            <td><input type="text" id=menucode readonly></td>
+        </tr>
+        <tr>
             <td>메뉴명</td>
             <td><input type="text" id=menuname readonly></td>
         </tr>
@@ -101,6 +105,9 @@ td.bound {
             </td>
             <td>
                 <table>
+                 <tr>
+                    <td>메뉴코드</td><td><input type=number id=_menucode style="width:200px;"></td>
+                </tr>
                 <tr>
                     <td>메뉴명</td><td><input type=text id=_menuname style="width:200px;"></td>
                 </tr>
@@ -117,13 +124,12 @@ td.bound {
             </td>
         </tr>    
         </table>
-    
 </div>
 </body>
 <script src='https://code.jquery.com/jquery-3.5.0.js'></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <script>   
-
+ar1='';
 
 $(document)
 .ready(function(){
@@ -133,100 +139,148 @@ $(document)
 .on('click','#selMenu',function(){
     str=$('#selMenu option:selected').text();
     ar=str.split(' ');
-    $('#menuname').val(ar[0]);
-    $('#price').val(ar[1]+'원');
-    $('#count').val(1)+'원';
+    $('#menucode').val(ar[0]);
+    $('#menuname').val(ar[1]);
+    $('#price').val(ar[2]);
+    $('#count').val(1);
 })
 .on('change','#count',function(){
     str=$('#count').val();
-    $('#price').val(ar[1]*str+'원');
+    $('#price').val(ar[2]*str);
 })
 //$('btnReset').trigger('click'); -> 한 줄로 밑에 코드를 실행 가능
 .on('click','#btnReset',function(){
-    $('#menuname,#count,#price').val('');
+    $('#menucode,#menuname,#count,#price').val('');
 })
 .on('click','#btnAdd',function(){
-    str='<option>'+$('#menuname').val()+'     '+$('#count').val()+'개'+'     '+ $('#price').val()+'</option>';
+    str='<option>'+$('#menucode').val()+' '+$('#menuname').val()+' '+$('#count').val()+' '+ $('#price').val()+'</option>';
     $('#selOrder').append(str); 
     a=$('#price').val()
-    a=parseInt(a)
-    ar1+=a
-    $('#total').val(ar1+'원')
+    a=parseInt(a);
+    ar1+=a;
+    ar1=parseInt(ar1);
+    $('#total').val(ar1);
+  	
+    
 })
 .on('click','#btnCancel',function(){
     $('#total,#mobile').val('');
     $('#selOrder').text('');
     ar1=0;
 })
-// .on('click','#btnDone',function(){
+.on('click','#btnDone',function(){
 //     str1='<option>'+'고객번호 : '+$('#mobile').val()+'     '+'구매금액 : '+$('#total').val()+'</option>';  
 //     $('#selSales').append(str1);
 //     $('#selOrder').text('');
 //     $('#menuname,#count,#price,#total,#mobile').val('');
 //     ar1=0;
-// })
-// .on('click','#btnMenu',function(){
-//     $('#dlgMenu').dialog({
-//         width:560,
-//         open:function(){
-//             $('#selMenu1').empty();
-//             $.each(arMenu,function(ndx,obj){
-//             strMenu=`<option value="${obj['name']}">${obj['name']} ${obj['price'] }</option>`;
-//             $('#selMenu1').append(strMenu);
-//             })
-//         },
-//         close:function(){       // 변경된 메뉴리스트를 원래 메뉴목록에 표시
-//             $('#selMenu').empty();
-//             $.each(arMenu,function(ndx,obj){
-//             strMenu=`<option value="${obj['name']}">${obj['name']} ${obj['price'] }</option>`;
-//             $('#selMenu').append(strMenu);
-//             })
-//         }
-        
-//     });
-// })
-// .on('click','#selMenu1',function(){  //메뉴명과 가격이 표시된다. _menuname / _price
-//     let str=$('#selMenu1 option:selected').text();
-//     ar=str.split(' ');
-//     console.log(ar)
-//     $('#_menuname').val(ar[0]);
-//     $('#_price').val(ar[1]);
-// })
-// .on('click','#btnPlus',function(){  //추가(생성) 및 수정            아메리카노의 인덱스번호를 바꿔야됨\
-//     a=$('#_price').val()
-//     a=parseInt(a)
-//     let obj={};
-//     obj['name']=$('#_menuname').val();
-//     obj['price']=$('#_price').val();
-//     arMenu.push(obj);
-//     $('#selMenu1').empty();
-//     $.each(arMenu,function(ndx,obj){
-//     strMenu=`<option value="${obj['name']}">${obj['name']} ${obj['price'] }</option>`;
-//     $('#selMenu1').append(strMenu);
-//     })
-// })
+    
+    $('#selOrder option').each(function(){
+    	str='<option>'+$('#mobile').val()+' '+$(this).text()+'</option>';
+    	$('#selSales').append(str);
+    	
+    	stt=$('#mobile').val()+' '+$(this).text();
+    	stt1=stt.split(' ');
+    		$.get('insertSales',{mobile:stt1[0],
+    							code:stt1[1],qty:stt1[3],
+    							price:stt1[4]},
+    							function(txt){},'text');    		    		
+})
+$('#selOrder').text(" ");
+$('#mobile,#total').val(" ");
+})
+.on('click','#btnMenu',function(){
+    $('#dlgMenu').dialog({
+        width:560,
+        open:function(){
+            $('#selMenu1').empty();
+            $.get('selectMenu',{},function(txt){
+				let rec=txt.split(';');
+				for(i=0; i<rec.length; i++){
+			let field=rec[i].split(',');
+			let html='<option value='+field[0]+'>'+field[0]+' '+field[1]+' '+field[2]+'</option>';
+			$('#selMenu1').append(html);
+				}
+									},'text');
+            },        		
+        close:function(){       // 변경된 메뉴리스트를 원래 메뉴목록에 표시
+            $('#selMenu').empty();
+            $.get('selectMenu',{},function(txt){
+				let rec=txt.split(';');
+				for(i=0; i<rec.length; i++){
+			let field=rec[i].split(',');
+			let html='<option value='+field[0]+'>'+field[0]+' '+field[1]+' '+field[2]+'</option>';
+			$('#selMenu').append(html);
+				}
+									},'text');
+            }
+    })
+})
+.on('click','#selMenu1',function(){  //메뉴명과 가격이 표시된다. _menuname / _price
+    let str=$('#selMenu1 option:selected').text();
+    ar=str.split(' ');
+    $('#_menucode').val(ar[0]);
+    $('#_menuname').val(ar[1]);
+    $('#_price').val(ar[2]);
+})
 
-// .on('click','#btnMinus',function(){ // 삭제 (null)
-//     let ndx=$('#selMenu1 option:selected').index();
-//     arMenu.splice(ndx,1)
-//     $('#selMenu1').empty();
-//      $.each(arMenu,function(ndx,obj){
-//     strMenu=`<option value="${obj['name']}">${obj['name']} ${obj['price'] }</option>`;
-//     $('#selMenu1').append(strMenu);
-//     })
-// })
-// .on('click','#btnUpdate',function(){        //수정및변경
-//     a=$('#_price').val()
-//     a=parseInt(a)
-//     let ndx=$('#selMenu1 option:selected').index();
-//     arMenu[ndx]['name']=$('#_menuname').val();
-//     arMenu[ndx]['price']=a;
-//     $('#selMenu1').empty();
-//     $.each(arMenu,function(ndx,obj){
-//     strMenu=`<option value="${obj['name']}">${obj['name']} ${obj['price'] }</option>`;
-//     $('#selMenu1').append(strMenu);
-//     })
-// });
+.on('click','#btnPlus',function(){  //추가(생성) 및 수정            아메리카노의 인덱스번호를 바꿔야됨\
+    a=$('#_price').val()
+    a=parseInt(a)
+    let operation='';
+	if($('#_menucode').val()=='' && //insert
+		$('#_menuname').val()!='' &&
+			$('#_price').val()!='' ){
+			operation="insertMenu";
+		}
+		else{
+			alert('입력값이 모두 채워지지 않았습니다.');
+			return false;
+		  }
+	$.get(operation,{code:$('#_menucode').val(),
+		name:$('#_menuname').val(),
+		price:$('#_price').val()
+		},
+	function(txt){
+//			alert('servlet finished');						
+		$('#_menucode,#_menuname,#_price').val("");
+		loadselMenu();
+	},'text');
+    })
+.on('click','#btnMinus',function(){ // 삭제 (null)
+	a=$('#_price').val()
+    a=parseInt(a)
+    let operation='';
+	if($('#_menucode').val()!='' && //insert
+		$('#_menuname').val()=='' &&
+			$('#_price').val()=='' ){
+			operation="deleteMenu";
+		}
+		else{
+			return false;
+		  }
+	$.get(operation,{code:$('#_menucode').val(),
+					name:$('#_menuname').val(),
+					price:$('#_price').val()
+					},
+	function(txt){
+//			alert('servlet finished');						
+		$('#_menucode,#_menuname,#_price').val("");
+		loadselMenu();
+	},'text');
+		})
+.on('click','#btnUpdate',function(){        //수정및변경
+
+	$.get('updateMenu',{name:$('#_menuname').val(),	price:$('#_price').val(),code:$('#_menucode').val()
+					},
+	function(txt){
+//			alert('servlet finished');						
+		$('#_menuname,#_price,#_menucode').val("");
+		loadselMenu();
+	},'text');
+})
+ 
+
 
 function loadMenu(){
 	$('#selMenu').empty();
@@ -234,14 +288,25 @@ function loadMenu(){
 				let rec=txt.split(';');
 				for(i=0; i<rec.length; i++){
 			let field=rec[i].split(',');
-			let html='<option value='+field[0]+'>'+field[0]+' '+field[1]+'</option>';
+			let html='<option value='+field[0]+'>'+field[0]+' '+field[1]+' '+field[2]+'</option>';
 			$('#selMenu').append(html);
-			
 		}
 	},'text');
-	
 	return false;
-}
+};
+
+function loadselMenu(){
+	$('#selMenu1').empty();
+	$.get('selectMenu',{},function(txt){
+				let rec=txt.split(';');
+				for(i=0; i<rec.length; i++){
+			let field=rec[i].split(',');
+			let html='<option value='+field[0]+'>'+field[0]+' '+field[1]+' '+field[2]+'</option>';
+			$('#selMenu1').append(html);
+		}
+	},'text');
+	return false;
+};
 
 
 

@@ -3,9 +3,8 @@
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,16 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class selectMenu
+ * Servlet implementation class insertMenu
  */
-@WebServlet("/selectMenu")
-public class selectMenu extends HttpServlet {
+@WebServlet("/insertMenu")
+public class insertMenu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public selectMenu() {
+    public insertMenu() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,38 +34,40 @@ public class selectMenu extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		Connection conn=null;
-		Statement stmt=null;
-		ResultSet rs=null;
-		
-		String strReturn="";
+		PreparedStatement pstmt=null;
+
+
 		String url="jdbc:oracle:thin:@localhost:1521:orcl";	/* 다른사람 db접속하려면 @뒤에 IP주소 넣으면 됨 */
 		String userid="ora_user";
 		String passcode="human123";
-		String sql="select code,name,price from menu order by code";
+		String sql="insert into menu values(seq_menu.nextval,?,?)";
+		// roomcode, name, type, howmany, howmuch
 		
+		String result_flag="";
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");	//driver(ojdbc6.jar)
-			conn=DriverManager.getConnection(url,userid,passcode); // db접속 실패하면 null뜸
-			stmt=conn.createStatement(); //SQL문을 넣을 곳을 만들어라
-			rs=stmt.executeQuery(sql);	// SQL문 실행 결과를 rs에 담아라
-			while(rs.next()){	
-				if(!strReturn.equals("")) strReturn+=";";
-				strReturn+=rs.getInt("code")+","+rs.getString("name")+","+rs.getInt("price");
-			}
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn=DriverManager.getConnection(url,userid,passcode);
+			pstmt=conn.prepareStatement(sql);
+									
+			pstmt.setString(1,request.getParameter("name"));
+			pstmt.setInt(2,Integer.parseInt(request.getParameter("price")));
+			
+			pstmt.executeUpdate();
+			result_flag="OK";
 		} catch (Exception e) {
+			result_flag="FAIL";
 			e.printStackTrace();
 		}	
 		 finally{
-			  try {
-				if(stmt!=null)stmt.close();
-				if(conn!=null)conn.close();
-		      } catch (SQLException e) {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(conn!=null) conn.close();
+			} catch (SQLException e) {
 					e.printStackTrace();
-			    }
-		  }
-		response.getWriter().print(strReturn);
+					}
+				
+			}
 	}
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
