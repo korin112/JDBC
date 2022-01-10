@@ -3,8 +3,9 @@
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,16 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class insertSales
+ * Servlet implementation class selectSales1
  */
-@WebServlet("/insertSales")
-public class insertSales extends HttpServlet {
+@WebServlet("/selectSales1")
+public class selectSales1 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public insertSales() {
+    public selectSales1() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,41 +35,38 @@ public class insertSales extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		Connection conn=null;
-		PreparedStatement pstmt=null;
-
-
+		Statement stmt=null;
+		ResultSet rs=null;
+		
+		String strReturn="";
 		String url="jdbc:oracle:thin:@localhost:1521:orcl";	/* 다른사람 db접속하려면 @뒤에 IP주소 넣으면 됨 */
 		String userid="ora_user";
 		String passcode="human123";
-		String sql="insert into cafe_sales values(seq_sales.nextval,?,?,?,?,sysdate)";	//soldtime빠짐
-		// roomcode, name, type, howmany, howmuch
-		
+		String sql="select mobile,sum(total) from cafe_sales group by mobile order by sum(total) desc";
 		
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn=DriverManager.getConnection(url,userid,passcode);
-			pstmt=conn.prepareStatement(sql);
-									
-			pstmt.setString(1,request.getParameter("mobile"));
-			pstmt.setInt(2,Integer.parseInt(request.getParameter("code")));
-			pstmt.setInt(3,Integer.parseInt(request.getParameter("qty")));
-			pstmt.setInt(4,Integer.parseInt(request.getParameter("price")));
-			
-			pstmt.executeUpdate();
-		
+			Class.forName("oracle.jdbc.driver.OracleDriver");	//driver(ojdbc6.jar)
+			conn=DriverManager.getConnection(url,userid,passcode); // db접속 실패하면 null뜸
+			stmt=conn.createStatement(); //SQL문을 넣을 곳을 만들어라
+			rs=stmt.executeQuery(sql);	// SQL문 실행 결과를 rs에 담아라
+			while(rs.next()){		
+				if(!strReturn.equals("")) strReturn+=";";
+				strReturn+=rs.getString("mobile")+","+rs.getInt("sum(total)");
+						   
+						   
+			}
 		} catch (Exception e) {
-		
 			e.printStackTrace();
 		}	
 		 finally{
-			try {
-				if(pstmt!=null)pstmt.close();
-				if(conn!=null) conn.close();
-			} catch (SQLException e) {
+			  try {
+				if(stmt!=null)stmt.close();
+				if(conn!=null)conn.close();
+		      } catch (SQLException e) {
 					e.printStackTrace();
-					}
-				
-			}
+			    }
+		  }
+		response.getWriter().print(strReturn);
 	}
 
 	/**
