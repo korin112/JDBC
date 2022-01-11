@@ -18,7 +18,6 @@ table.bound {
     border-collapse: collapse;
     border:2px solid gray;
     height: 400px;
-    
     text-align:left;
     margin-left:auto; margin-right:auto;
     
@@ -41,6 +40,9 @@ body{
 footer{
 	width: 120px; 
 	margin: 0 auto;
+}
+div{
+	vertical-align: top;
 }
 </style>
 <body>
@@ -86,6 +88,7 @@ footer{
     <td valign=top>
         <table class='bound'>
         <caption><b>주문목록<b></caption>
+        <tr><td>   </td></tr>
         <tr>
             <td colspan="2">
                 <select id=selOrder size=16></select>
@@ -112,13 +115,13 @@ footer{
         <table class='bound'>
         <caption><b>판매내역<b></caption>
         <tr>
-            <td colspan="2" align="right">
+            <td align="right">
                 <button id=btnsum>Summary</button>
             </td>
         </tr>
         <tr>
             <td>
-            <select id=selSales size=16></select>
+            <select id=selSales size=20></select>
             </td>
         </tr>
         </table>
@@ -140,7 +143,7 @@ footer{
                     <td>메뉴명</td><td><input type=text id=_menuname style="width:200px;"></td>
                 </tr>
                 <tr>
-                    <td>단가(가격)</td><td><input type=number id=_price min=500 step=500 style="width:50px;">원</td>
+                    <td>단가(가격)</td><td><input type=number id=_price min=500 step=500 style="width:190px;">원</td>
                 </tr>
                 <tr>
                     <td colspan="2" align="right"><button id=btnPlus>전송</button>
@@ -154,14 +157,20 @@ footer{
 </div>
 
 <div id=dlgMenu1 style="display:none;" title='총 판매량'>
-    <table>
+    <table>메뉴코드/메뉴명/수량/가격
+    <hr>
         <tr>
-            <td>메뉴코드/메뉴명/수량/가격
-               <select id=sumMenu1 size=10> </select>
-            </td> &nbsp&nbsp&nbsp&nbsp&nbsp     
-
-            <td>
-            	고객번호/총액<select id=sumMenu2 size=10></select>
+            <td >
+               <select id=sumMenu1 size=6 style="width:400px;"> </select>
+            </td>     
+		</tr>
+	</table>
+	<br>
+	<table>고객번호/총액
+	<hr>
+		<tr>
+            <td >
+            	<select id=sumMenu2 size=6 style="width:400px;"></select>
             </td>
     </tr>
         </table>
@@ -340,8 +349,8 @@ function loadsum1(){
 			let html='<option value='+field[0]+'>'+field[0]+' '+field[1]+'</option>';
 			$('#sumMenu2').append(html);
 				}
-									},'text');}}
-	)
+									},'text');}
+	})
 };
 
 </script>
