@@ -44,7 +44,7 @@ public class selectSales extends HttpServlet {
 		String passcode="human123";
 		String sql="select a.code,a.name,sum(b.qty),sum(b.total) "
 				+"from menu a,cafe_sales b "
-				+"where a.code=b.menu_code group by a.code, a.name order by a.name";
+				+"where a.code=b.menu_code group by a.code, a.name order by sum(b.total) desc";
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");	//driver(ojdbc6.jar)

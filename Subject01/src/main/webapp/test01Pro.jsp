@@ -12,11 +12,11 @@
 <%request.setCharacterEncoding("UTF-8");	response.setContentType("text/html; charset=UTF-8");%>
 <%	double pi=Math.PI;
 	String a=request.getParameter("insertId");
-	double b=Double.parseDouble(a);
+	double a1=Double.parseDouble(a);
 %>
 반지름 :	<%=a%><br>
-원의 면적 : <%=Math.pow(b*pi,2) %>	<br>
-원의 둘레 :	<%=2*pi*b %>
+원의 면적 : <%=Math.pow(a1*pi,2) %>	<br>
+원의 둘레 :	<%=2*pi*a1 %>
 </body>
 <script src='https://code.jquery.com/jquery-3.5.0.js'></script>
 <script>

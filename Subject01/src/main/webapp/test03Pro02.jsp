@@ -10,9 +10,6 @@
 <h1>로그인 확인</h1>
 <hr>
 <body>
-
-
-
 아이디 :<%=session.getAttribute("idname1")%><br>
 비밀번호 :<%=session.getAttribute("password1")%>
 </body>

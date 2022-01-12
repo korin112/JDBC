@@ -10,14 +10,12 @@
 <hr>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
 <style>
 table.bound {   
     border-collapse: collapse;
     border:2px solid gray;
-    height: 400px;
+    height: 493px;
     text-align:left;
     margin-left:auto; margin-right:auto;
     
@@ -27,6 +25,7 @@ td.bound {
 }    
 #selMenu,#selOrder,#selSales,#selMenu1{
     width:260px;
+    height:100%;
 }
 *{
 	font-family: 'Gowun Batang', serif;
@@ -65,19 +64,19 @@ div{
         
         <tr>
             <td>메뉴코드</td>
-            <td><input type="text" id=menucode readonly></td>
+            <td><input type="text" id=menucode readonly style="width:180px;"></td>
         </tr>
         <tr>
             <td>메뉴명</td>
-            <td><input type="text" id=menuname readonly></td>
+            <td><input type="text" id=menuname readonly style="width:180px;"></td>
         </tr>
         <tr>
             <td>수량</td>
-            <td><input type="number" id=count min=1></td>
+            <td><input type="number" id=count min=1 style="width:180px;"></td>
         </tr>
         <tr>
             <td>금액</td>
-            <td><input type="text" id=price readonly></td>
+            <td><input type="text" id=price readonly style="width:180px;"></td>
         </tr>
         <tr>
             <td><button id=btnReset>비우기</button></td>
@@ -86,9 +85,9 @@ div{
         </table>
     </td>
     <td valign=top>
-        <table class='bound'>
+        <table class='bound' >
         <caption><b>주문목록<b></caption>
-        <tr><td>   </td></tr>
+        <tr><td style="height:29px;"> &nbsp  </td></tr>
         <tr>
             <td colspan="2">
                 <select id=selOrder size=16></select>
@@ -96,11 +95,11 @@ div{
         </tr>
         <tr>
             <td>총액</td>
-            <td><input type="text" id=total size=15></td>
+            <td><input type="text" id=total size=15 style="width:175px;"></td>
         </tr>
         <tr>
             <td>고객번호</td>
-            <td><input type="phone" id=mobile size=15></td>
+            <td><input type="phone" id=mobile size=15 style="width:175px;"></td>
         </tr>
         <tr>
             <td colspan="2">&nbsp;</td>
