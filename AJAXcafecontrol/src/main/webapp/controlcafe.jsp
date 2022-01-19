@@ -87,7 +87,7 @@ div{
     <td valign=top>
         <table class='bound' >
         <caption><b>주문목록<b></caption>
-        <tr><td style="height:29px;"> &nbsp  </td></tr>
+        <tr><td style="height:30px;"> &nbsp  </td></tr>
         <tr>
             <td colspan="2">
                 <select id=selOrder size=16></select>
