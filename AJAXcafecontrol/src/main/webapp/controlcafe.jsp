@@ -37,8 +37,9 @@ body{
 	width:800px;
 }
 footer{
-	width: 120px; 
-	margin: 0 auto;
+	width: 195px;
+    margin: 0 auto;
+    font-size: 25px;
 }
 div{
 	vertical-align: top;
@@ -52,7 +53,7 @@ div{
         <caption><b>메뉴목록<b></caption>
         <tr>
             <td colspan="2" align="right">
-                <button id=btnMenu>메뉴관리</button>
+                <button id=btnMenu style="background-color:transparent";>메뉴관리</button>
             </td>
         </tr>
         
@@ -79,8 +80,8 @@ div{
             <td><input type="text" id=price readonly style="width:180px;"></td>
         </tr>
         <tr>
-            <td><button id=btnReset>비우기</button></td>
-            <td align="right"><button id=btnAdd>메뉴추가</button></td>
+            <td><button id=btnReset style="background-color:transparent";>비우기</button></td>
+            <td align="right"><button id=btnAdd style="background-color:transparent";>메뉴추가</button></td>
         </tr>
         </table>
     </td>
@@ -105,8 +106,8 @@ div{
             <td colspan="2">&nbsp;</td>
         </tr>
         <tr>
-            <td><button id=btnCancel>주문취소</button></td>
-            <td align="right"><button id=btnDone>주문완료</button></td>
+            <td><button id=btnCancel style="background-color:transparent";>주문취소</button></td>
+            <td align="right"><button id=btnDone style="background-color:transparent";>주문완료</button></td>
         </tr>
         </table>
     </td>
@@ -115,7 +116,7 @@ div{
         <caption><b>판매내역<b></caption>
         <tr>
             <td align="right">
-                <button id=btnsum>Summary</button>
+                <button id=btnsum style="background-color:transparent";>Summary</button>
             </td>
         </tr>
         <tr>
@@ -145,8 +146,8 @@ div{
                     <td>단가(가격)</td><td><input type=number id=_price min=500 step=500 style="width:190px;">원</td>
                 </tr>
                 <tr>
-                    <td colspan="2" align="right"><button id=btnPlus>전송</button>
-                    <button id=reset>삭제</button>    
+                    <td colspan="2" align="right"><button id=btnPlus style="background-color:transparent";>전송</button>
+                    <button id=reset style="background-color:transparent";>삭제</button>    
                     </td>
                 </tr>
                 </table>
@@ -176,7 +177,7 @@ div{
 </div>
 </body>
 <hr>
-<footer>Copyleft: Yoo SH</footer>
+<footer>Copyleft : Yoo SH</footer>
 <script src='https://code.jquery.com/jquery-3.5.0.js'></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <script>   
